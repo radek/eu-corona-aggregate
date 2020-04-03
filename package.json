@@ -1,0 +1,23 @@
+{
+  "name": "eu-corona-aggregate",
+  "version": "1.0.0",
+  "description": "Data aggregate service for www.corona-tracker.eu",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=aggregate",
+    "test": "tape test/*"
+  },
+  "author": "RC",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.5.0",
+    "tape": "^4.13.2"
+  },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/radek/eu-corona-aggregate.git"
+  }
+}
