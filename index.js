@@ -3,6 +3,7 @@ const fetch = require("node-fetch")
 const AVAILABLE_METRICS = ['confirmed', 'deaths', 'recovered']
 const CACHE_TTL = 1 // in hours
 const EU_GROUP = ['EU', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czechia', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland', 'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden']
+const OFFSET = 32
 
 const cache = {
   data: {},
@@ -31,13 +32,14 @@ exports.aggregate = async (req, res) => {
 
   try {
     const data = await getCovid19(metric)
-    cache.data[metric] = aggregate(data, [...EU_GROUP])
-    const futureDate = new Date()
-    futureDate.setHours(futureDate.getHours() + CACHE_TTL)
-    cache.ttl = futureDate
+    cache.data[metric] = aggregate(data, [...EU_GROUP], OFFSET)
   } catch (error) {
     return res.status(400).send(error)
   }
+
+  const futureDate = new Date()
+  futureDate.setHours(futureDate.getHours() + CACHE_TTL)
+  cache.ttl = futureDate
 
   return res.status(200).send(cache.data[metric])
 }

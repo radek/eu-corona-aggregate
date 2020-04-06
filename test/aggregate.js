@@ -27,3 +27,12 @@ test('test', (t) => {
   t.deepEqual(target(input, labels), expect)
   t.end()
 });
+
+test('test', (t) => {
+  const labels = ['A', 'b', 'd', 'e']
+  const input = {'a':[0,0], 'b': [0,1], 'c': [0,1], 'd': [0,1], 'e': [2,5], 'f': [0,2], 'g': [0,1] }
+  const expect = {'a':[0], 'b': [1], 'b, A': [1], 'c': [1], 'd': [1], 'd, A': [1], 'e': [5], 'e, A': [5], 'A': [7], 'f': [2], 'g': [1] }
+
+  t.deepEqual(target(input, labels, 1), expect)
+  t.end()
+});
